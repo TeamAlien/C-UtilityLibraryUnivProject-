@@ -1,0 +1,164 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node 
+{
+int data;
+struct Node * next;
+struct Node * top;
+} * node;
+
+struct Node * top = NULL, * absTop=NULL;
+
+void reverse();
+void push(int val);
+int pop();
+void pushToBottom(int val);
+int isEmpty();
+void sort();
+
+void push(int val)
+{
+ node = (struct Node *)malloc(sizeof(struct Node));
+ 
+ if(node==NULL)
+  printf("\nstack overflow"); 
+  else
+  {
+   node->data = val;
+   node->next = top;
+   top = node;
+  } 
+}
+
+int pop()
+{
+ //node = (struct Node *)malloc(sizeof(struct Node));
+ int x = -1;
+ 
+ if(top==NULL)
+ printf("\nstack underflow");
+ else
+ {
+  x = top->data;
+  top = top->next;
+  //free(node);
+ }
+ return x; 
+}
+
+void main()
+{
+ for(int i=1;i<11;i++)
+ push(random()%10);
+ 
+ absTop = top;
+ 
+ 
+ sort();
+ printf("\n");
+ 
+ while(!isEmpty())
+ {
+  printf("%d ",pop());
+ }  
+ 
+}
+
+void sort()
+{
+ static int x;
+ static int count = 0,follow_count_repeat=0,flag=1,follow_count_backtrack=0;
+ x = pop();
+ if(flag)
+ {
+  count++;
+ } 
+ 
+ if(top)
+ {
+  if(x > top->data)
+  {
+  int y = x ;
+  x = top->data;
+  top->data = y;
+  }
+  sort();
+ }
+ push(x);
+ 
+ if(follow_count_backtrack <= count)
+ {
+  follow_count_backtrack++;
+  return;
+ }
+ 
+  if(follow_count_repeat <= count)
+   {
+    follow_count_repeat++;
+    flag = 0;
+    sort();
+   } 
+  
+}  
+ 
+void reverse()
+{
+ int x = pop();
+ if(top && top->next)
+ {
+  reverse();
+ }
+ pushToBottom(x);
+}
+
+void pushToBottom(int val)
+{
+ int x = pop();
+ if(top)
+ {
+  pushToBottom(val);
+ }
+ else
+ push(val);
+ 
+ push(x); 
+}
+
+int isEmpty()
+{
+ if(top)
+ return 0;
+ return 1;
+} 
+
+void peek()
+{
+ if(top)
+ printf("\n%d",top->data);
+ else
+ printf("\nits null");
+}
+ 
+void middleDisplay()
+{
+ static int i=0;
+ int x;
+ x = pop();
+  i++;
+ if(top->next)
+ {
+ // static int i=0;
+  middleDisplay();
+ }
+  
+  static int j=1;
+  if(j==(i/2)+1)
+  {
+   //peek();
+   printf("\n%d",top->data);
+  }
+  push(x);
+  j++;
+  return ;
+}

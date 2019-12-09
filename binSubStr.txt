@@ -1,0 +1,90 @@
+#include <iostream>
+#include<stack>
+using namespace std;
+
+int funct(int i, int j,int * arr);
+
+int main() {
+	//code
+	int t,val,length=0,x,i,j;
+	scanf("%d",&t);
+	
+	while(t--)
+	{
+	    //-1 to terminate
+	    scanf("%d",&val);
+	    int arr[100];
+	    while(val!=-1)
+	    {
+	        arr[i]=val;
+	        length++;
+	        scanf("%d",&val);
+	        
+	    }
+	    
+	    int x=0;
+	    for(i=0;i<length-2;i++)
+	    {
+	        for(j==i+2;j<length;j++)
+	        {
+	           if(funct(i,j,arr) && (j-i+1>x) )
+	           {
+	               x = j-i+1;
+	           }
+	        }
+	    }
+	   
+	   cout<<x<<"\n";
+	}
+	
+	
+
+	return 0;
+	
+}
+
+int funct(int i, int j,int * arr)
+{
+    stack <int> stk;
+    int k;
+    
+    for(k=i;k<=j;k++)
+    {
+        if(arr[k]==0)
+        {
+           /* if(!stk.empty() && stk.top()==0 )
+            {
+                stk.pop();
+                if(!stk.empty() && stk.top()==1)
+                stk.pop();
+                else
+                stk.push(0);
+            }*/
+            if(stk.empty() && k<=i)
+            {
+                stk.push(arr[k]);
+            }
+            else
+            {
+                if(!stk.empty() && stk.top()==0 )
+                {
+                stk.pop();
+                if(!stk.empty() && stk.top()==1)
+                stk.pop();
+                else
+                stk.push(0);
+                }
+            }
+        }
+        else
+        {
+            stk.push(arr[k]);
+        }
+    }
+    
+    if(stk.empty())
+    return 1;
+    else
+    return 0;
+}
+
